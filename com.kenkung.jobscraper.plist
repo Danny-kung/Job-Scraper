@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.kenkung.jobscraper</string>
+
+    <!-- Uses the venv Python so all pip packages are available.
+         launchd runs in a clean environment without your shell's PATH. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/kenkung/Job Scraper/venv/bin/python3</string>
+        <string>/Users/kenkung/Job Scraper/main.py</string>
+    </array>
+
+    <!-- Run every day at 9:00 AM -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- Working directory so relative paths in Python resolve correctly -->
+    <key>WorkingDirectory</key>
+    <string>/Users/kenkung/Job Scraper</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/kenkung/Job Scraper/logs/scraper.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/kenkung/Job Scraper/logs/scraper_error.log</string>
+
+    <!-- Do not fire immediately when loaded with launchctl -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <!-- Do not auto-restart on failure -->
+    <key>KeepAlive</key>
+    <false/>
+</dict>
+</plist>
