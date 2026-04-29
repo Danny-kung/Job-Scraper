@@ -15,10 +15,10 @@ logger = logging.getLogger("main")
 
 import pandas as pd
 
-import custom_scrapers
 import scraper
 import sheets
 import config
+from scrapers import JobSpyScraper, JobBankScraper
 
 
 def _prioritize_gta(df: pd.DataFrame) -> pd.DataFrame:
@@ -43,11 +43,11 @@ def run():
     logger.info("=== Job Scraper Starting ===")
 
     # Step 1: Fetch from jobspy sites (LinkedIn, Indeed, ZipRecruiter, Google)
-    jobspy_df = scraper.fetch_all_jobs()
+    jobspy_df = JobSpyScraper().fetch()
 
-    # Step 2: Fetch from Canada's Job Bank RSS feed
+    # Step 2: Fetch from Canada's Job Bank RSS feed (with retry logic)
     logger.info("Fetching from Job Bank...")
-    jobbank_df = custom_scrapers.fetch_jobbank()
+    jobbank_df = JobBankScraper().fetch()
 
     # Combine both sources
     frames = [df for df in [jobspy_df, jobbank_df] if not df.empty]
